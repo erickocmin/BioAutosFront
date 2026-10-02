@@ -14,7 +14,7 @@ test('recorre los módulos verdes y abre formularios principales', async ({ page
     ['/accounts/empleados', 'Empleados'], ['/accounts/permisos', 'Matriz de permisos'],
     ['/inventory/productos', 'Productos y stock'], ['/inventory/movimientos', 'Movimientos'], ['/inventory/kardex', 'Kardex'],
     ['/treasury/cajas', 'Cajas'], ['/treasury/arqueos', 'Arqueos'],
-    ['/attendance/events', 'Marcaciones'], ['/attendance/daily', 'Asistencia diaria'], ['/attendance/devices', 'Dispositivos de asistencia'],
+    ['/attendance/biometric', 'Control de huella'], ['/attendance/events', 'Marcaciones'], ['/attendance/daily', 'Asistencia diaria'], ['/attendance/devices', 'Dispositivos de asistencia'],
   ] as const
   for (const [url, heading] of pages) {
     await page.goto(url)

@@ -12,6 +12,7 @@ const PermissionsPage = lazy(() => import('./modules/accounts/PermissionsPage').
 const DevicesPage = lazy(() => import('./modules/attendance/DevicesPage').then((module) => ({ default: module.DevicesPage })))
 const EventsPage = lazy(() => import('./modules/attendance/EventsPage').then((module) => ({ default: module.EventsPage })))
 const DailyPage = lazy(() => import('./modules/attendance/DailyPage').then((module) => ({ default: module.DailyPage })))
+const LocalBiometricPage = lazy(() => import('./modules/attendance/LocalBiometricPage').then((module) => ({ default: module.LocalBiometricPage })))
 const BranchesPage = lazy(() => import('./modules/core/BranchesPage').then((module) => ({ default: module.BranchesPage })))
 const CompaniesPage = lazy(() => import('./modules/core/CompaniesPage').then((module) => ({ default: module.CompaniesPage })))
 const MovementsPage = lazy(() => import('./modules/inventory/MovementsPage').then((module) => ({ default: module.MovementsPage })))
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="attendance/events" element={<EventsPage />} />
         <Route path="attendance/devices" element={<DevicesPage />} />
         <Route path="attendance/daily" element={<DailyPage />} />
+        <Route path="attendance/biometric" element={<LocalBiometricPage />} />
       </Route>
     </Route>
     <Route path="*" element={<Navigate to="/" replace />} />
