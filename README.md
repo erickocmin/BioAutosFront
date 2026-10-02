@@ -1,8 +1,12 @@
 # SISGETRAN Frontend
 
-Interfaz empresarial React + Vite + TypeScript. Requiere Node.js 22+ y npm 10+.
+SPA en React 19 + Vite + TypeScript que consume la API del backend Django (`../sisgetran-backend`). Requiere Node 20+ (probado con Node 24) y el backend corriendo en `http://localhost:8000`.
+
+> ¿Primera vez configurando esto, incluido el huellero biométrico por Ethernet? Sigue la guía completa en el backend: [`../sisgetran-backend/docs/puesta-en-marcha.md`](../sisgetran-backend/docs/puesta-en-marcha.md).
 
 ## Instalación
+
+No hay `requirements.txt`: las dependencias se resuelven con `npm install` a partir de `package.json` (React, React Router, TanStack Query, Axios, Zod, React Hook Form como dependencias; Vite, TypeScript, Playwright y Vitest como herramientas de desarrollo).
 
 ```powershell
 npm install
@@ -10,27 +14,20 @@ Copy-Item .env.example .env
 npm run dev
 ```
 
-Configure `VITE_API_URL=http://localhost:8000/api/v1`. El backend debe estar activo y permitir el origen `http://localhost:5173`.
+`.env.example` ya trae `VITE_API_URL=http://localhost:8000/api/v1`, apuntando al backend local. Abre `http://localhost:5173` e inicia sesión (usuario `demo` / contraseña `DemoOnly.2026` si el backend corrió `manage.py seed_demo`).
 
-## Calidad
-
-```powershell
-npm run lint
-npm run test
-npm run build
-```
-
-Los listados solicitan búsqueda y paginación al servidor; marcaciones y asistencia aceptan filtros de fecha, empleado, dispositivo, método y sucursal desde la API. TanStack Query gestiona caché e invalidaciones, sin reemplazar la validación autoritativa de Django.
-
-## E2E
-
-Playwright inicia Vite; el backend debe estar activo en `http://127.0.0.1:8000`. El caso autenticado solo utiliza credenciales ficticias proporcionadas por variables de entorno:
+## Scripts disponibles
 
 ```powershell
-npx playwright install chromium
-$env:E2E_USER='usuario-demo'
-$env:E2E_PASSWORD='<clave-demo>'
-npm run test:e2e
+npm run dev        # servidor de desarrollo (Vite)
+npm run build      # type-check (tsc -b) + build de producción
+npm run lint        # oxlint sobre src/
+npm run test        # pruebas unitarias (vitest)
+npm run test:e2e    # pruebas end-to-end (Playwright, requiere E2E_USER/E2E_PASSWORD)
+npm run preview     # sirve el build de producción localmente
 ```
 
-Sin esas variables se ejecuta la validación visual pública y se omiten de forma explícita los casos autenticados.
+## Pantallas de biometría local
+
+- **Registrar empleado** (`/attendance/registro`): datos del empleado y PIN biométrico. La huella se enrola físicamente en el huellero con ese mismo PIN.
+- **Reconocimiento** (`/attendance/biometric`): autoriza el huellero por Ethernet y muestra en vivo las entradas/salidas detectadas, con aviso cuando un PIN marcado todavía no tiene un empleado registrado.
